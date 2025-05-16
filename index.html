@@ -23,6 +23,7 @@
             align-items: center;
             justify-content: flex-start;
             padding-top: 50px;
+            user-select: none; /* Disable text selection */
         }
 
         .center-section {
@@ -157,7 +158,7 @@
 
     <div class="middle-wrapper">
         <div class="middle-section">
-            <div class="time" id="time">00:04</div>
+            <div class="time" id="time">12:04 AM</div>
             <div class="greeting" id="greeting">Good night, Zor</div>
             <div class="button-grid">
                 <a href="https://www.reddit.com" class="button">
@@ -189,9 +190,12 @@
     <script>
         function updateTime() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('time').textContent = `${hours}:${minutes}`;
+            let hours = now.getHours();
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            document.getElementById('time').textContent = `${hours}:${minutes} ${ampm}`;
 
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
